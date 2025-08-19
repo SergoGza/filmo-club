@@ -1,0 +1,15 @@
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: filmo_mariadb
+    environment:
+      MARIADB_USER: db
+      MARIADB_PASSWORD: db
+      MARIADB_ROOT_PASSWORD: dbpw
+      MARIADB_DATABASE: db
+    ports:
+      - 3306:3306
+    volumes:
+      - ../working-mariadb:/var/lib/mysql
+
+

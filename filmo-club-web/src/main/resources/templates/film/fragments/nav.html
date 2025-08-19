@@ -1,0 +1,63 @@
+<!--<nav xmlns="http://www.w3.org/1999/xhtml"-->
+<!--     xmlns:th="https://www.thymeleaf.org"-->
+<!--     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"-->
+<!--     th:fragment="nav" class="navbar navbar-expand-lg bg-light">-->
+
+<!--    <div class="container">-->
+<!--        <a class="navbar-brand" th:href="@{/film}">FilmoApp</a>-->
+<!--        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"-->
+<!--                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">-->
+<!--            <span class="navbar-toggler-icon"></span>-->
+<!--        </button>-->
+
+<!--        <div class="collapse navbar-collapse" id="navbarSupportedContent">-->
+<!--            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">-->
+
+<!--                <li sec:authorize="isAuthenticated()" class="nav-item dropdown">-->
+<!--                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"-->
+<!--                       aria-expanded="false" th:text="#{flight.nav.flights}">-->
+<!--                        Flights-->
+<!--                    </a>-->
+<!--                    <ul class="dropdown-menu">-->
+<!--                        <li>-->
+<!--                            <a class="dropdown-item" aria-current="page" th:href="@{/flight/flights}"-->
+<!--                               th:text="#{flight.nav.list}">List</a>-->
+<!--                        </li>-->
+<!--                        <li sec:authorize="hasAuthority('ROLE_ADMIN')">-->
+<!--                            <a class="dropdown-item" aria-current="page" th:href="@{/flight/flights-edit}"-->
+<!--                               th:text="#{flight.nav.edit}">Add</a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </li>-->
+
+<!--                <li sec:authorize="isAuthenticated()" class="nav-item dropdown">-->
+<!--                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"-->
+<!--                       aria-expanded="false" th:text="#{flight.nav.user}">-->
+<!--                        User-->
+<!--                    </a>-->
+<!--                    <ul class="dropdown-menu">-->
+<!--                        <li><a class="dropdown-item disabled" sec:authentication="name"></a></li>-->
+<!--                        <li>-->
+<!--                            <hr class="dropdown-divider">-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                            <form method="POST" th:action="@{/logout}">-->
+<!--                                <button type="submit" class="btn btn-link dropdown-item" th:text="#{flight.nav.logout}">-->
+<!--                                    Logout-->
+<!--                                </button>-->
+<!--                            </form>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </li>-->
+
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#" th:href="@{''(lang=en)}"-->
+<!--                       th:if="${#locale.language == 'es'}">English</a>-->
+<!--                    <a class="nav-link" href="#" th:href="@{''(lang=es)}"-->
+<!--                       th:if="${#locale.language == 'en'}">Castellano</a>-->
+<!--                </li>-->
+
+<!--            </ul>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</nav>-->
