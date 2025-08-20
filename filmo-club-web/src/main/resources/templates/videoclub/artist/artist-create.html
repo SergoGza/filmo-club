@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+
+<!--/* @thymesVar id="artist" type="com.videoclub.filmoapp.film.mvc.dto.ArtistMvcDTO" */-->
+
+<head th:replace="~{videoclub/fragments/head :: header(title = 'FilmoClub - Create Artist')}"></head>
+
+<body>
+
+<!-- TODO: Pendiente de crear nav fragment -->
+<nav>
+    <!-- nav th:replace="~{videoclub/fragments/nav :: nav}" -->
+    <div class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <span class="navbar-brand">FilmoClub</span>
+            <span class="text-light">Navegación pendiente de crear</span>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div class="row py-3">
+        <h1 class="border-bottom">Create Artist</h1>
+    </div>
+
+    <div class="row py-2">
+        <div class="col-md-8">
+            <form class="row" th:action="@{/videoclub/artist/create}"
+                  th:object="${artist}"
+                  method="post">
+
+                <div class="mb-3 row">
+                    <label for="name" class="col-md-2 col-form-label">Name</label>
+                    <div class="col-md-5">
+                        <input type="text"
+                               class="form-control"
+                               id="name" name="name" th:field="*{name}"
+                               placeholder="Artist name">
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="surname" class="col-md-2 col-form-label">Surname</label>
+                    <div class="col-md-5">
+                        <input type="text"
+                               class="form-control"
+                               id="surname" name="surname" th:field="*{surname}"
+                               placeholder="Artist surname">
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="artistType" class="col-md-2 col-form-label">Type</label>
+                    <div class="col-md-5">
+                        <select class="form-select"
+                                aria-label="Artist type" id="artistType" name="artistType" th:field="*{artistType}">
+                            <option value="">Select artist type</option>
+                            <option th:each="artistType: ${T(com.videoclub.filmoapp.film.domain.ArtistType).values()}"
+                                    th:value="${artistType.name()}"
+                                    th:text="${artistType.name()}"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="offset-md-2">
+                    <button class="btn btn-primary me-2" type="submit">Create Artist</button>
+                    <a href="#" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-md-4">
+            <!-- Espacio para información adicional o imagen en el futuro -->
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Artist Information</h5>
+                    <p class="card-text">Create a new artist that can be referenced when creating films. Artists can be either actors or directors.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div th:insert="~{videoclub/fragments/scripts}"></div>
+
+</body>
+</html>

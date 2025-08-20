@@ -6,6 +6,7 @@ import com.videoclub.filmoapp.film.dto.ArtistDTO;
 import com.videoclub.filmoapp.film.mvc.dto.ArtistMvcDTO;
 import com.videoclub.filmoapp.film.repository.ArtistDAO;
 import com.videoclub.filmoapp.film.service.ArtistService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
@@ -18,9 +19,10 @@ public class ArtistServiceImpl implements ArtistService {
     private final ModelMapper modelMapper;
 
     @Override
+    @Transactional
     public ArtistDTO createArtist(ArtistMvcDTO artistMvcDTO) {
 
-        if (artistDAO.existsById(artistMvcDTO.getId())) {
+        if (artistDAO.existsByNameAndSurnameAndArtistType(artistMvcDTO.getName(), artistMvcDTO.getSurname(), artistMvcDTO.getArtistType())) {
             throw new IllegalArgumentException("Artist already exists");
         }
 

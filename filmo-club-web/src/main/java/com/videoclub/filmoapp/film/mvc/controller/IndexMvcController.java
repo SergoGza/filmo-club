@@ -5,12 +5,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/film")
+@RequestMapping("/videoclub")
 public class IndexMvcController {
 
     @GetMapping
     public String getIndex() {
-        return "film/index";
+        return "videoclub/index";
     }
 
 
