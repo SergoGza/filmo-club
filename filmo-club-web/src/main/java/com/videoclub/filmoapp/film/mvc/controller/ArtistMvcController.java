@@ -1,6 +1,6 @@
 package com.videoclub.filmoapp.film.mvc.controller;
 
-import com.videoclub.filmoapp.film.dto.ArtistDTO;
+import com.videoclub.filmoapp.film.domain.ArtistType;
 import com.videoclub.filmoapp.film.mvc.dto.ArtistMvcDTO;
 import com.videoclub.filmoapp.film.service.ArtistService;
 import jakarta.validation.Valid;
@@ -30,7 +30,7 @@ public class ArtistMvcController {
 
         ModelAndView modelAndView = new ModelAndView("videoclub/artist/artist-create");
         modelAndView.addObject("artist", artistMvcDTO);
-        modelAndView.addObject("artistType", ArtistDTO.ArtistType.values());
+        modelAndView.addObject("artistType", ArtistType.values());
 
         if (model.containsAttribute("successMessage")) {
             modelAndView.addObject("successMessage", model.getAttribute("successMessage"));
@@ -52,7 +52,7 @@ public class ArtistMvcController {
         if (bindingResult.hasErrors()) {
             ModelAndView modelAndView = new ModelAndView("videoclub/artist/artist-create");
             modelAndView.addObject("artist", artistMvcDTO);
-            modelAndView.addObject("artistType", ArtistDTO.ArtistType.values());
+            modelAndView.addObject("artistType", ArtistType.values());
             return modelAndView;
         }
 

@@ -1,5 +1,6 @@
 package com.videoclub.filmoapp.film.dto;
 
+import com.videoclub.filmoapp.film.domain.ArtistType;
 import lombok.*;
 
 @Getter
@@ -13,10 +14,5 @@ public class ArtistDTO {
     private String name;
     private String surname;
     private ArtistType artistType;
-
-    public enum ArtistType {
-        ACTOR,
-        DIRECTOR
-    }
 
 }

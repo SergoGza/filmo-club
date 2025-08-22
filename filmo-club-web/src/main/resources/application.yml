@@ -10,7 +10,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: validate
     open-in-view: false
   servlet:
     multipart:
@@ -18,4 +18,4 @@ spring:
 
 logging:
   level:
-    web: trace
+    sql: trace

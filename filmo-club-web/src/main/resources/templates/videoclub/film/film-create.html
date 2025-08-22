@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+
+<!--/* @thymesVar id="film" type="com.videoclub.filmoapp.film.mvc.dto.FilmMvcDTO" */-->
+
+<head th:replace="~{videoclub/fragments/head :: header(title = 'FilmoClub - Create Film')}"></head>
+
+<body>
+
+<!-- TODO: Pendiente de crear nav fragment -->
+<nav>
+    <!-- nav th:replace="~{videoclub/fragments/nav :: nav}" -->
+    <div class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <span class="navbar-brand">FilmoClub</span>
+            <span class="text-light">Navegación pendiente de crear</span>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div class="row py-3">
+        <h1 class="border-bottom">Create Film</h1>
+    </div>
+
+    <div class="row py-2">
+        <div class="col-md-8">
+            <form class="row" th:action="@{/videoclub/film/create}"
+                  th:object="${film}"
+                  method="post">
+
+                <div class="mb-3 row">
+                    <label for="title" class="col-md-2 col-form-label">Title</label>
+                    <div class="col-md-5">
+                        <input type="text"
+                               class="form-control"
+                               id="title" name="title" th:field="*{title}"
+                               placeholder="Film title">
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="releaseYear" class="col-md-2 col-form-label">Release Year</label>
+                    <div class="col-md-5">
+                        <input type="number"
+                               class="form-control"
+                               id="releaseYear" name="releaseYear" th:field="*{releaseYear}"
+                               placeholder="2024" min="1900" max="2030">
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="directorId" class="col-md-2 col-form-label">Director</label>
+                    <div class="col-md-5">
+                        <select class="form-select"
+                                aria-label="Director" id="directorId" name="directorId" th:field="*{directorId}">
+                            <option value="">Select director</option>
+                            <option th:each="director: ${director}"
+                                    th:value="${director.id}"
+                                    th:text="${director.name + ' ' + director.surname}"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="actorIds" class="col-md-2 col-form-label">Actors</label>
+                    <div class="col-md-5">
+                        <select class="form-select" multiple
+                                aria-label="Actors" id="actorIds" name="actorIds" th:field="*{actorIds}">
+                            <option th:each="actor: ${actors}"
+                                    th:value="${actor.id}"
+                                    th:text="${actor.name + ' ' + actor.surname}"></option>
+                        </select>
+                        <div class="form-text">Hold Ctrl (Cmd on Mac) to select multiple actors</div>
+                    </div>
+                </div>
+
+                <div class="offset-md-2">
+                    <button class="btn btn-primary me-2" type="submit">Create Film</button>
+                    <a href="#" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-md-4">
+            <!-- Espacio para información adicional o imagen en el futuro -->
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Film Information</h5>
+                    <p class="card-text">Create a new film by providing the title, release year, director, and actors. All fields are required.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Mensaje de éxito si existe -->
+    <div th:if="${successMessage}" class="row py-2">
+        <div class="col-12">
+            <div class="alert alert-success" role="alert" th:text="${successMessage}">
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div th:insert="~{videoclub/fragments/scripts}"></div>
+
+</body>
+</html>

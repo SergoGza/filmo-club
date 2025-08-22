@@ -1,7 +1,6 @@
 package com.videoclub.filmoapp.film.mvc.controller;
 
 import com.videoclub.filmoapp.film.domain.ArtistType;
-import com.videoclub.filmoapp.film.dto.ArtistDTO;
 import com.videoclub.filmoapp.film.mvc.dto.ArtistMvcDTO;
 import com.videoclub.filmoapp.film.service.ArtistService;
 import org.junit.jupiter.api.Test;
@@ -35,7 +34,7 @@ class ArtistMvcControllerTest {
                         status().isOk())
                 .andExpect(view().name("videoclub/artist/artist-create"))
                 .andExpect(model().attributeExists("artist"))
-                .andExpect(model().attribute("artistType", ArtistDTO.ArtistType.values()));
+                .andExpect(model().attribute("artistType", ArtistType.values()));
 
     }
 

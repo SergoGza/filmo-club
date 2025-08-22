@@ -8,8 +8,11 @@ import com.videoclub.filmoapp.film.repository.ArtistDAO;
 import com.videoclub.filmoapp.film.service.ArtistService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +20,16 @@ public class ArtistServiceImpl implements ArtistService {
 
     private final ArtistDAO artistDAO;
     private final ModelMapper modelMapper;
+
+
+    @Override
+    public List<ArtistDTO> getArtistsByType(String artistType) {
+
+        List<Artist> artistsByArtistType = artistDAO.findArtistByArtistType(ArtistType.valueOf(artistType));
+
+        return artistsByArtistType.stream().map(artist -> modelMapper.map(artist, ArtistDTO.class)).toList();
+
+    }
 
     @Override
     @Transactional

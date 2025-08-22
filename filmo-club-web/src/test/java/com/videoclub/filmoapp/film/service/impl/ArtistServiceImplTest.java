@@ -36,7 +36,6 @@ class ArtistServiceImplTest {
                 .name("Ronaldo")
                 .artistType(ArtistType.ACTOR)
                 .surname("Nazario")
-                .films(null)
                 .build();
 
         artistDAO.save(artist);

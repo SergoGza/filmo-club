@@ -27,12 +27,4 @@ public class Artist {
     private ArtistType artistType;
 
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "artists_with_films",
-            joinColumns = @JoinColumn(name = "film_id"),
-            inverseJoinColumns = @JoinColumn(name = "artist_id")
-    )
-    private Set<Film> films;
-
 }
