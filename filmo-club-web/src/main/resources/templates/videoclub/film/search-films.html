@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+
+<head th:replace="~{videoclub/fragments/head :: header(title = 'FilmoClub - Search Films')}"></head>
+
+<body>
+
+<!-- TODO: Pendiente de crear nav fragment -->
+<nav>
+    <!-- nav th:replace="~{videoclub/fragments/nav :: nav}" -->
+    <div class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <span class="navbar-brand">FilmoClub</span>
+            <span class="text-light">Navegación pendiente de crear</span>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div class="row py-3">
+        <h1 class="border-bottom">Search Films</h1>
+    </div>
+
+    <div class="row py-2">
+        <div class="col-md-8">
+            <form class="row" th:action="@{/videoclub/film/films}" method="get">
+
+                <div class="mb-3 row">
+                    <label for="title" class="col-md-2 col-form-label">Title</label>
+                    <div class="col-md-5">
+                        <input type="text"
+                               class="form-control"
+                               id="title" name="title"
+                               placeholder="Enter film title to search">
+                    </div>
+                </div>
+
+                <div class="offset-md-2">
+                    <button class="btn btn-primary me-2" type="submit">Search Films</button>
+                    <a href="#" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Search Information</h5>
+                    <p class="card-text">Search for films in the database by title. You can enter partial titles to find matching films.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div th:insert="~{videoclub/fragments/scripts}"></div>
+
+</body>
+</html>

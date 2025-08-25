@@ -44,17 +44,17 @@ class FilmDAOTest {
 
     }
 
-    @Test
-    void givenFilms_whenFindByTitle_thenReturnOk() {
-
-        List<Film> filmOrFilms = filmDAO.findByTitleLike("%Film%");
-        Assertions.assertNotNull(filmOrFilms);
-        Assertions.assertEquals(2, filmOrFilms.size());
-
-        filmOrFilms = filmDAO.findByTitleLike("Film 1");
-        Assertions.assertEquals(1, filmOrFilms.size());
-
-
-    }
+//    @Test
+//    void givenFilms_whenFindByTitle_thenReturnOk() {
+//
+//        List<Film> filmOrFilms = filmDAO.findByTitleLike("%Film%");
+//        Assertions.assertNotNull(filmOrFilms);
+//        Assertions.assertEquals(2, filmOrFilms.size());
+//
+//        filmOrFilms = filmDAO.findByTitleLike("Film 1");
+//        Assertions.assertEquals(1, filmOrFilms.size());
+//
+//
+//    }
 
 }

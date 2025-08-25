@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+
+<!--/* @thymesVar id="filmDTOPage" type="org.springframework.data.domain.Page<com.videoclub.filmoapp.film.dto.FilmDTO>" */-->
+<!--/* @thymesVar id="title" type="java.lang.String" */-->
+
+<head th:replace="~{videoclub/fragments/head :: header(title = 'FilmoClub - Film Results')}"></head>
+
+<body>
+
+<!-- TODO: Pendiente de crear nav fragment -->
+<nav>
+    <!-- nav th:replace="~{videoclub/fragments/nav :: nav}" -->
+    <div class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <span class="navbar-brand">FilmoClub</span>
+            <span class="text-light">Navegación pendiente de crear</span>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div class="row py-3">
+        <div class="col-md-8">
+            <h1 class="border-bottom">Search Results</h1>
+            <p class="text-muted">Results for: "<span th:text="${title}">search term</span>"</p>
+        </div>
+        <div class="col-md-4 d-flex align-items-center justify-content-end">
+            <a th:href="@{/videoclub/film/search}" class="btn btn-secondary">New Search</a>
+        </div>
+    </div>
+
+    <!-- Resultados de búsqueda -->
+    <div class="row py-2">
+        <div class="col-12">
+
+            <!-- Si hay películas -->
+            <div th:if="${filmDTOPage.hasContent()}" class="row">
+                <div class="col-md-6 col-lg-4 mb-3" th:each="film : ${filmDTOPage.content}">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${film.title}">Film Title</h5>
+                            <p class="card-text">
+                                <strong>Year:</strong> <span th:text="${film.releaseYear}">2024</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Si no hay películas -->
+            <div th:if="${!filmDTOPage.hasContent()}" class="text-center py-5">
+                <div class="row">
+                    <div class="col-12">
+                        <h3 class="text-muted">No films found</h3>
+                        <p class="text-muted">No films match your search criteria: "<span th:text="${title}">search term</span>"</p>
+                        <a th:href="@{/videoclub/film/search}" class="btn btn-primary mt-3">
+                            Try Another Search
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Paginación -->
+    <div class="row py-3" th:if="${filmDTOPage.totalPages > 1}">
+        <div class="col-12">
+            <nav aria-label="Film pagination">
+                <ul class="pagination justify-content-center">
+
+                    <!-- Página anterior -->
+                    <li class="page-item" th:classappend="${!filmDTOPage.hasPrevious()} ? 'disabled'">
+                        <a class="page-link"
+                           th:href="@{/videoclub/film/films(title=${title}, page=${filmDTOPage.number - 1}, size=${filmDTOPage.size})}">
+                            Previous
+                        </a>
+                    </li>
+
+                    <!-- Páginas numeradas -->
+                    <li class="page-item"
+                        th:each="pageNum : ${#numbers.sequence(0, filmDTOPage.totalPages - 1)}"
+                        th:classappend="${pageNum == filmDTOPage.number} ? 'active'">
+                        <a class="page-link"
+                           th:href="@{/videoclub/film/films(title=${title}, page=${pageNum}, size=${filmDTOPage.size})}"
+                           th:text="${pageNum + 1}">1</a>
+                    </li>
+
+                    <!-- Página siguiente -->
+                    <li class="page-item" th:classappend="${!filmDTOPage.hasNext()} ? 'disabled'">
+                        <a class="page-link"
+                           th:href="@{/videoclub/film/films(title=${title}, page=${filmDTOPage.number + 1}, size=${filmDTOPage.size})}">
+                            Next
+                        </a>
+                    </li>
+
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+</div>
+
+<div th:insert="~{videoclub/fragments/scripts}"></div>
+
+</body>
+</html>

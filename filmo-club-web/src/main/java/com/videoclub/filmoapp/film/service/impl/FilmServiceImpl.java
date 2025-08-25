@@ -10,6 +10,8 @@ import com.videoclub.filmoapp.film.service.FilmService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -22,8 +24,15 @@ public class FilmServiceImpl implements FilmService {
 
     private final FilmDAO filmDAO;
     private final ArtistDAO artistDAO;
+    private final ModelMapper modelMapper;
 
+    @Override
+    public Page<FilmDTO> getFilms(String title, Pageable pageable) {
 
+        Page<Film> filmsByTitleLike = filmDAO.findByTitleLike(title, pageable);
+        return filmsByTitleLike.map(film -> modelMapper.map(film, FilmDTO.class));
+
+    }
 
     @Override
     @Transactional
@@ -40,7 +49,7 @@ public class FilmServiceImpl implements FilmService {
                         .stream()
                         .map(id -> artistDAO.findById(id)
                                 .orElseThrow(() -> new IllegalArgumentException("Actor with id:%s not found ".formatted(id))))
-                        .collect(Collectors.toList()));
+                        .toList());
 
 
         Film film = Film.builder()

@@ -16,6 +16,8 @@ spring:
     multipart:
       max-file-size: 10MB
 
-logging:
-  level:
-    sql: trace
+#logging:
+#  level:
+#    root: debug
+server:
+  port: 8080
