@@ -26,4 +26,5 @@ public interface FilmDAO extends JpaRepository<Film, Long> {
 """)
     Page<Film> findByTitleLike(@Param("title") String title, Pageable pageable);
 
+    Page<Film> findAll(Pageable pageable);
 }

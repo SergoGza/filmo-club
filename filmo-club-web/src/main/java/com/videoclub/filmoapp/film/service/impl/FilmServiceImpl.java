@@ -14,7 +14,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -27,18 +30,55 @@ public class FilmServiceImpl implements FilmService {
     private final ModelMapper modelMapper;
 
     @Override
-    public Page<FilmDTO> getFilms(String title, Pageable pageable) {
+    public FilmDTO getFilm(Long filmId) {
 
-        Page<Film> filmsByTitleLike = filmDAO.findByTitleLike(title, pageable);
-        return filmsByTitleLike.map(film -> modelMapper.map(film, FilmDTO.class));
+        return filmDAO.findById(filmId).map(film -> modelMapper.map(film, FilmDTO.class))
+                .orElseThrow(() -> new IllegalArgumentException("Film with id:%s not found".formatted(filmId)));
 
     }
+
+    @Override
+    public Page<FilmDTO> getFilms(String title, Pageable pageable) {
+        Page<Film> filmPage;
+
+        if (title != null && !title.trim().isEmpty()) {
+            filmPage = filmDAO.findByTitleLike("%" + title + "%", pageable);
+        } else {
+            filmPage = filmDAO.findAll(pageable);
+        }
+
+        return filmPage.map(film -> modelMapper.map(film, FilmDTO.class));
+    }
+
 
     @Override
     @Transactional
     public FilmDTO createFilm(FilmMvcDTO filmMvcDTO) {
 
-        // condicional para comprobar que no existe una película
+        Film film = createOrEdit(new Film(), filmMvcDTO);
+        return modelMapper.map(film, FilmDTO.class);
+
+    }
+
+    @Override
+    @Transactional
+    public FilmDTO editFilm(FilmMvcDTO filmMvcDTO) {
+
+        Film film = filmDAO.findById(filmMvcDTO.getId())
+                .orElseThrow(
+                        () ->
+                                new IllegalArgumentException(
+                                        "Flight with id:%s not found".formatted(filmMvcDTO.getId())));
+
+        film = createOrEdit(film, filmMvcDTO);
+        return modelMapper.map(film, FilmDTO.class);
+
+    }
+
+    protected Film createOrEdit(
+            Film film, FilmMvcDTO filmMvcDTO
+    ) {
+
 
         Artist director = artistDAO.findById(filmMvcDTO.getDirectorId())
                 .orElseThrow(() -> new IllegalArgumentException("Director not found"));
@@ -52,25 +92,12 @@ public class FilmServiceImpl implements FilmService {
                         .toList());
 
 
-        Film film = Film.builder()
-                .title(filmMvcDTO.getTitle())
-                .releaseYear(filmMvcDTO.getReleaseYear())
-                .director(director)
-                .actors(actorOrActors)
-                .build();
+        film.setTitle(filmMvcDTO.getTitle());
+        film.setReleaseYear(filmMvcDTO.getReleaseYear());
+        film.setDirector(director);
+        film.setActors(actorOrActors);
 
-        Film filmSaved = filmDAO.save(film);
-
-        return FilmDTO.builder()
-                .title(filmSaved.getTitle())
-                .releaseYear(filmSaved.getReleaseYear())
-                .directorId(director.getId())
-                .actorIds(
-                        actorOrActors.stream().
-                                map(Artist::getId)
-                                .sorted()
-                                .collect(Collectors.toList()))
-                .build();
+        return filmDAO.save(film);
 
 
     }
