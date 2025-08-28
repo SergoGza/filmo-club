@@ -1,5 +1,6 @@
-package com.videoclub.filmoapp.film.domain;
+package com.videoclub.filmoapp.auth.domain;
 
+import com.videoclub.filmoapp.film.domain.Film;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <!--/* @thymesVar id="films" type="org.springframework.data.domain.Page<com.videoclub.filmoapp.film.dto.FilmDTO>" */-->
 <!--/* @thymesVar id="title" type="java.lang.String" */-->
@@ -8,23 +9,15 @@
 
 <body>
 
-<!-- TODO: Pendiente de crear nav fragment -->
-<nav>
-    <!-- nav th:replace="~{videoclub/fragments/nav :: nav}" -->
-    <div class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <span class="navbar-brand">FilmoClub</span>
-            <span class="text-light">Navegación pendiente de crear</span>
-        </div>
-    </div>
-</nav>
+<nav th:replace="~{videoclub/fragments/nav :: nav}"></nav>
 
 <div class="container">
 
     <div class="row py-3">
         <div class="col-md-8">
             <!-- Título dinámico según si hay búsqueda o no -->
-            <h1 class="border-bottom" th:text="${title != null && !#strings.isEmpty(title)} ? 'Search Results' : 'All Films'"></h1>
+            <h1 class="border-bottom"
+                th:text="${title != null && !#strings.isEmpty(title)} ? 'Search Results' : 'All Films'"></h1>
 
             <!-- Mostrar criterio de búsqueda solo si existe -->
             <p class="text-muted" th:if="${title != null && !#strings.isEmpty(title)}">
@@ -69,7 +62,8 @@
                             <!-- Botones de acción -->
                             <div class="mt-auto">
                                 <a th:href="@{/videoclub/film/films-edit/{id}(id=${film.id})}"
-                                   class="btn btn-outline-primary btn-sm">Edit</a>
+                                   class="btn btn-outline-primary btn-sm"
+                                   sec:authorize="hasRole('ADMIN')">Edit</a>
                             </div>
                         </div>
                     </div>
@@ -83,7 +77,8 @@
                         <!-- Mensaje diferente según si es búsqueda o no -->
                         <div th:if="${title != null && !#strings.isEmpty(title)}">
                             <h3 class="text-muted">No films found</h3>
-                            <p class="text-muted">No films match your search criteria: "<span th:text="${title}">search term</span>"</p>
+                            <p class="text-muted">No films match your search criteria: "<span th:text="${title}">search term</span>"
+                            </p>
                             <a th:href="@{/videoclub/film/films}" class="btn btn-secondary me-2">Show All Films</a>
                             <a th:href="@{/videoclub/film/search}" class="btn btn-primary">Try Another Search</a>
                         </div>

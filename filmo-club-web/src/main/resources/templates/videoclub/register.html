@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+
+<!--/* @thymesVar id="user" type="com.videoclub.filmoapp.auth.dto.UserMvcDTO" */-->
+
+<head th:replace="~{videoclub/fragments/head :: header('FilmoClub - Register')}"></head>
+
+<body>
+
+<nav th:replace="~{videoclub/fragments/nav :: nav}"></nav>
+
+<div class="container">
+    <div class="row py-3">
+        <h1 class="border-bottom">Create Account</h1>
+    </div>
+
+    <!-- Success message -->
+    <div th:if="${param.success}" class="alert alert-success" role="alert">
+        Registration successful! You can now <a th:href="@{/login}">login here</a>.
+    </div>
+
+    <!-- Error message -->
+    <div th:if="${param.error}" class="alert alert-danger" role="alert">
+        Registration failed. Please check your information and try again.
+    </div>
+
+    <div class="row py-2">
+        <div class="col-md-8">
+            <form th:action="@{/register}"
+                  th:object="${user}"
+                  method="post">
+
+                <div class="mb-3 row">
+                    <label for="username" class="col-md-2 col-form-label">Username</label>
+                    <div class="col-md-5">
+                        <input type="text"
+                               class="form-control"
+                               id="username"
+                               th:field="*{username}"
+                               placeholder="Enter your username"
+                               required>
+                        <!-- Error validation -->
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="email" class="col-md-2 col-form-label">Email</label>
+                    <div class="col-md-5">
+                        <input type="email"
+                               class="form-control"
+                               id="email"
+                               th:field="*{email}"
+                               placeholder="Enter your email"
+                               required>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="name" class="col-md-2 col-form-label">First Name</label>
+                    <div class="col-md-5">
+                        <input type="text"
+                               class="form-control"
+                               id="name"
+                               th:field="*{name}"
+                               placeholder="Enter your first name"
+                               required>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="surname" class="col-md-2 col-form-label">Last Name</label>
+                    <div class="col-md-5">
+                        <input type="text"
+                               class="form-control"
+                               id="surname"
+                               th:field="*{surname}"
+                               placeholder="Enter your last name"
+                               required>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></div>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="birthDate" class="col-md-2 col-form-label">Birth Date</label>
+                    <div class="col-md-5">
+                        <input type="date"
+                               class="form-control"
+                               id="birthDate"
+                               th:field="*{birthDate}"
+                               required>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></div>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="password" class="col-md-2 col-form-label">Password</label>
+                    <div class="col-md-5">
+                        <input type="password"
+                               class="form-control"
+                               id="password"
+                               th:field="*{password}"
+                               placeholder="Enter your password"
+                               required>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="confirmPassword" class="col-md-2 col-form-label">Confirm Password</label>
+                    <div class="col-md-5">
+                        <input type="password"
+                               class="form-control"
+                               id="confirmPassword"
+                               th:field="*{confirmPassword}"
+                               placeholder="Confirm your password"
+                               required>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></div>
+                    </div>
+                </div>
+
+                <!-- Global errors -->
+                <div class="mb-3 row" th:if="${#fields.hasGlobalErrors()}">
+                    <div class="offset-md-2 col-md-10">
+                        <div class="alert alert-danger" role="alert">
+                            <ul class="mb-0">
+                                <li th:each="error : ${#fields.globalErrors()}" th:text="${error}"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="offset-md-2">
+                    <button type="submit" class="btn btn-primary me-2">Create Account</button>
+                    <a th:href="@{/login}" class="btn btn-secondary">Back to Login</a>
+                </div>
+
+            </form>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Registration Information</h5>
+                    <p class="card-text">
+                        Create your FilmoClub account to start managing your film collection.
+                        All fields are required.
+                    </p>
+                    <hr>
+                    <p class="card-text">
+                        <small class="text-muted">
+                            Already have an account?
+                            <a th:href="@{/login}">Login here</a>
+                        </small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:insert="~{videoclub/fragments/scripts}"></div>
+
+</body>
+</html>

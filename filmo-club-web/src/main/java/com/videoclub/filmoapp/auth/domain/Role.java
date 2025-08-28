@@ -1,4 +1,4 @@
-package com.videoclub.filmoapp.film.domain;
+package com.videoclub.filmoapp.auth.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -16,7 +16,6 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
 
 }

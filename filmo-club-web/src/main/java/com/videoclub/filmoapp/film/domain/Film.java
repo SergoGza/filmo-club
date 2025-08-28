@@ -1,6 +1,7 @@
 package com.videoclub.filmoapp.film.domain;
 
 
+import com.videoclub.filmoapp.auth.domain.User;
 import jakarta.persistence.*;
 import lombok.*;
 
