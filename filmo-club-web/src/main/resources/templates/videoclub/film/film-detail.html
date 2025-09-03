@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<!--/* @thymesVar id="film" type="com.videoclub.filmoapp.film.dto.FilmDTO" */-->
+<!--/* @thymesVar id="userRating" type="java.lang.Integer" */-->
+<!--/* @thymesVar id="averageRating" type="java.lang.Double" */-->
+<!--/* @thymesVar id="totalRatings" type="java.lang.Long" */-->
+
+<head th:replace="~{videoclub/fragments/head :: header(title = 'FilmoClub - Film Detail')}"></head>
+
+<body>
+
+<nav th:replace="~{videoclub/fragments/nav :: nav}"></nav>
+
+<div class="container">
+
+    <div class="row py-3">
+        <div class="col-md-8">
+            <h1 class="border-bottom" th:text="${film.title}">Film Title</h1>
+
+            <!-- Mostrar promedio si existe -->
+            <div th:if="${averageRating != null and averageRating > 0}" class="mb-2">
+                <span class="badge bg-primary fs-6" th:text="'★ ' + ${averageRating}">★ 4.50</span>
+                <small class="text-muted ms-2">
+                    (<span th:text="${totalRatings}">5</span>
+                    <span th:text="${totalRatings == 1 ? 'rating' : 'ratings'}">ratings</span>)
+                </small>
+            </div>
+
+            <!-- Si no hay ratings -->
+            <div th:if="${averageRating == null or averageRating == 0}" class="mb-2">
+                <span class="badge bg-secondary">--</span>
+                <small class="text-muted ms-2">No ratings yet</small>
+            </div>
+        </div>
+        <div class="col-md-4 d-flex align-items-center justify-content-end">
+            <a th:href="@{/videoclub/film/films}" class="btn btn-secondary">Back to Films</a>
+        </div>
+    </div>
+
+    <div class="row py-2">
+        <div class="col-md-8">
+            <!-- Información de la película -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Film Information</h5>
+
+                    <p class="card-text">
+                        <strong>Release Year:</strong> <span th:text="${film.releaseYear}">2024</span>
+                    </p>
+
+                    <p class="card-text">
+                        <strong>Director:</strong> <span th:text="${film.directorName}">Director Name</span>
+                    </p>
+
+                    <div th:if="${film.actorNames != null and !film.actorNames.isEmpty()}">
+                        <strong>Actors:</strong>
+                        <ul class="mb-0">
+                            <li th:each="actor : ${film.actorNames}" th:text="${actor}">Actor Name</li>
+                        </ul>
+                    </div>
+
+                    <p class="card-text mt-3">
+                        <small class="text-muted">Created by: <span th:text="${film.createdByUsername}">user</span></small>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Formulario de puntuación -->
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Rate this Film</h5>
+
+                    <!-- Si el usuario ya puntuó -->
+                    <div th:if="${userRating != null}" class="alert alert-info">
+                        <strong>Your Rating:</strong> <span th:text="${userRating}">4</span>/5
+                        <p class="mb-0 mt-2"><small>You have already rated this film. You cannot change your rating.</small></p>
+                    </div>
+
+                    <!-- Formulario para puntuar (solo si no ha puntuado) -->
+                    <form th:if="${userRating == null}"
+                          th:action="@{/videoclub/film/rating/{filmId}(filmId=${film.id})}"
+                          method="post">
+
+                        <div class="mb-3">
+                            <label for="score" class="form-label">Rating (1-5):</label>
+                            <select class="form-select" id="score" name="score" required>
+                                <option value="">-- Select Rating --</option>
+                                <option value="1">1 - Poor</option>
+                                <option value="2">2 - Fair</option>
+                                <option value="3">3 - Good</option>
+                                <option value="4">4 - Very Good</option>
+                                <option value="5">5 - Excellent</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Submit Rating</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+            <!-- Información adicional -->
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Film Statistics</h5>
+
+                    <div class="mb-3">
+                        <strong>Average Rating:</strong><br>
+                        <span th:if="${averageRating != null and averageRating > 0}"
+                              class="h4 text-primary" th:text="${averageRating}">4.50</span>
+                        <span th:if="${averageRating == null or averageRating == 0}"
+                              class="h4 text-muted">--</span>
+                    </div>
+
+                    <div class="mb-3">
+                        <strong>Total Ratings:</strong><br>
+                        <span class="h5" th:text="${totalRatings != null ? totalRatings : 0}">0</span>
+                    </div>
+
+                    <div th:if="${userRating != null}">
+                        <strong>Your Rating:</strong><br>
+                        <span class="h5 text-success" th:text="${userRating}">4</span><span class="text-muted">/5</span>
+                    </div>
+
+                    <div th:if="${userRating == null}">
+                        <p class="text-muted"><small>Rate this film to contribute to its average rating.</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mensajes de éxito/error -->
+    <div th:if="${successMessage}" class="row py-2">
+        <div class="col-12">
+            <div class="alert alert-success" role="alert" th:text="${successMessage}"></div>
+        </div>
+    </div>
+
+    <div th:if="${errorMessage}" class="row py-2">
+        <div class="col-12">
+            <div class="alert alert-danger" role="alert" th:text="${errorMessage}"></div>
+        </div>
+    </div>
+
+</div>
+
+<div th:insert="~{videoclub/fragments/scripts}"></div>
+
+</body>
+</html>

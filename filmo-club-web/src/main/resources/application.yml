@@ -21,3 +21,10 @@ spring:
 #    root: debug
 server:
   port: 8080
+
+rating-api:
+  urlbase: http://localhost:8081
+  timeout: 10s
+  oauth:
+    client-id: filmo-web-client
+    client-secret: RxmgLW5HLjX9vpXHZwwgUlEEf12MnWrs

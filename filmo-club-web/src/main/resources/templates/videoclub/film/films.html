@@ -61,6 +61,8 @@
                             </p>
                             <!-- Botones de acción -->
                             <div class="mt-auto">
+                                <a th:href="@{/videoclub/film/films/{id}(id=${film.id})}"
+                                   class="btn btn-primary btn-sm me-2">View Details</a>
                                 <a th:href="@{/videoclub/film/films-edit/{id}(id=${film.id})}"
                                    class="btn btn-outline-primary btn-sm"
                                    sec:authorize="hasRole('ADMIN')">Edit</a>

@@ -1,0 +1,23 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: filmo-rating-api
+  datasource:
+    url: jdbc:mariadb://localhost:3306/videoclub
+    username: root
+    password: dbpw
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+
+application:
+  jwt:
+    secret: RxmgLW5HLjX9vpXHZwwgUlEEf3fs5fBC
+    duration: PT1H
+    oauth:
+      client-id: filmo-web-client
+      client-secret: RxmgLW5HLjX9vpXHZwwgUlEEf12MnWrs

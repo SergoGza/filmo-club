@@ -7,98 +7,117 @@ import com.videoclub.filmoapp.film.mvc.dto.FilmMvcDTO;
 import com.videoclub.filmoapp.film.repository.ArtistDAO;
 import com.videoclub.filmoapp.film.repository.FilmDAO;
 import com.videoclub.filmoapp.film.service.FilmService;
+import com.videoclub.filmoapp.rating.client.RatingClient;
+import com.videoclub.filmoapp.rating.client.impl.RatingClientImpl;
 import jakarta.transaction.Transactional;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-
 @Service
 @RequiredArgsConstructor
 public class FilmServiceImpl implements FilmService {
 
-    private final FilmDAO filmDAO;
-    private final ArtistDAO artistDAO;
-    private final ModelMapper modelMapper;
+  private final FilmDAO filmDAO;
+  private final ArtistDAO artistDAO;
+  private final ModelMapper modelMapper;
+  private final RatingClient ratingClient;
 
-    @Override
-    public FilmDTO getFilm(Long filmId) {
+  @Override
+  public FilmDTO getFilm(Long filmId) {
 
-        return filmDAO.findById(filmId).map(film -> modelMapper.map(film, FilmDTO.class))
-                .orElseThrow(() -> new IllegalArgumentException("Film with id:%s not found".formatted(filmId)));
+    return filmDAO
+        .findById(filmId)
+        .map(film -> modelMapper.map(film, FilmDTO.class))
+        .orElseThrow(
+            () -> new IllegalArgumentException("Film with id:%s not found".formatted(filmId)));
+  }
 
+  @Override
+  public Page<FilmDTO> getFilms(String title, Pageable pageable) {
+    Page<Film> filmPage;
+
+    if (title != null && !title.trim().isEmpty()) {
+      filmPage = filmDAO.findByTitleLike("%" + title + "%", pageable);
+    } else {
+      filmPage = filmDAO.findAll(pageable);
     }
 
-    @Override
-    public Page<FilmDTO> getFilms(String title, Pageable pageable) {
-        Page<Film> filmPage;
+    return filmPage.map(film -> modelMapper.map(film, FilmDTO.class));
+  }
 
-        if (title != null && !title.trim().isEmpty()) {
-            filmPage = filmDAO.findByTitleLike("%" + title + "%", pageable);
-        } else {
-            filmPage = filmDAO.findAll(pageable);
-        }
+  @Override
+  @Transactional
+  public FilmDTO createFilm(FilmMvcDTO filmMvcDTO) {
 
-        return filmPage.map(film -> modelMapper.map(film, FilmDTO.class));
-    }
+    Film film = createOrEdit(new Film(), filmMvcDTO);
+    return modelMapper.map(film, FilmDTO.class);
+  }
 
+  @Override
+  @Transactional
+  public FilmDTO editFilm(FilmMvcDTO filmMvcDTO) {
 
-    @Override
-    @Transactional
-    public FilmDTO createFilm(FilmMvcDTO filmMvcDTO) {
+    Film film =
+        filmDAO
+            .findById(filmMvcDTO.getId())
+            .orElseThrow(
+                () ->
+                    new IllegalArgumentException(
+                        "Flight with id:%s not found".formatted(filmMvcDTO.getId())));
 
-        Film film = createOrEdit(new Film(), filmMvcDTO);
-        return modelMapper.map(film, FilmDTO.class);
+    film = createOrEdit(film, filmMvcDTO);
+    return modelMapper.map(film, FilmDTO.class);
+  }
 
-    }
+  protected Film createOrEdit(Film film, FilmMvcDTO filmMvcDTO) {
 
-    @Override
-    @Transactional
-    public FilmDTO editFilm(FilmMvcDTO filmMvcDTO) {
+    Artist director =
+        artistDAO
+            .findById(filmMvcDTO.getDirectorId())
+            .orElseThrow(() -> new IllegalArgumentException("Director not found"));
 
-        Film film = filmDAO.findById(filmMvcDTO.getId())
-                .orElseThrow(
-                        () ->
-                                new IllegalArgumentException(
-                                        "Flight with id:%s not found".formatted(filmMvcDTO.getId())));
+    Set<Artist> actorOrActors =
+        new HashSet<>(
+            Optional.ofNullable(filmMvcDTO.getActorIds()).orElse(Collections.emptyList()).stream()
+                .map(
+                    id ->
+                        artistDAO
+                            .findById(id)
+                            .orElseThrow(
+                                () ->
+                                    new IllegalArgumentException(
+                                        "Actor with id:%s not found ".formatted(id))))
+                .toList());
 
-        film = createOrEdit(film, filmMvcDTO);
-        return modelMapper.map(film, FilmDTO.class);
+    film.setTitle(filmMvcDTO.getTitle());
+    film.setReleaseYear(filmMvcDTO.getReleaseYear());
+    film.setDirector(director);
+    film.setActors(actorOrActors);
 
-    }
+    return filmDAO.save(film);
+  }
 
-    protected Film createOrEdit(
-            Film film, FilmMvcDTO filmMvcDTO
-    ) {
+  @Override
+  public Integer getUserRatingForFilm(Long filmId, Long userId) {
+    return ratingClient.getUserRating(filmId, userId);
+  }
 
+  @Override
+  public RatingClientImpl.AverageRatingResponseDTO getAverageRatingForFilm(Long filmId) {
 
-        Artist director = artistDAO.findById(filmMvcDTO.getDirectorId())
-                .orElseThrow(() -> new IllegalArgumentException("Director not found"));
+    return ratingClient.getAverageRating(filmId);
+  }
 
-        Set<Artist> actorOrActors = new HashSet<>(
-                Optional.ofNullable(filmMvcDTO.getActorIds())
-                        .orElse(Collections.emptyList())
-                        .stream()
-                        .map(id -> artistDAO.findById(id)
-                                .orElseThrow(() -> new IllegalArgumentException("Actor with id:%s not found ".formatted(id))))
-                        .toList());
+  @Override
+  public void createRatingForFilm(Long filmId, Long userId, Integer score) {
 
-
-        film.setTitle(filmMvcDTO.getTitle());
-        film.setReleaseYear(filmMvcDTO.getReleaseYear());
-        film.setDirector(director);
-        film.setActors(actorOrActors);
-
-        return filmDAO.save(film);
-
-
-    }
+    ratingClient.createRating(filmId, userId, score);
+  }
 }
