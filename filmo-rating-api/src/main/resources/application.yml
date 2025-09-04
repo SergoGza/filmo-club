@@ -21,3 +21,8 @@ application:
     oauth:
       client-id: filmo-web-client
       client-secret: RxmgLW5HLjX9vpXHZwwgUlEEf12MnWrs
+
+logging:
+  level:
+    org.springframework.web.reactive.function: debug
+    com.videoclub.filmoapp: debug

@@ -16,9 +16,10 @@ spring:
     multipart:
       max-file-size: 10MB
 
-#logging:
-#  level:
-#    root: debug
+logging:
+  level:
+    org.springframework.web.reactive.function.client: debug
+    com.videoclub.filmoapp: debug
 server:
   port: 8080
 

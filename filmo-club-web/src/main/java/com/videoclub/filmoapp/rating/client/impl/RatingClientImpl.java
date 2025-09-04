@@ -2,16 +2,14 @@ package com.videoclub.filmoapp.rating.client.impl;
 
 import com.videoclub.filmoapp.auth.config.RatingApiConfigurationProperties;
 import com.videoclub.filmoapp.rating.client.RatingClient;
+import java.time.LocalDateTime;
+import java.util.Base64;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.Base64;
 
 @Service
 @RequiredArgsConstructor
@@ -26,16 +24,32 @@ public class RatingClientImpl implements RatingClient {
     String credentials = properties.oauth().clientId() + ":" + properties.oauth().clientSecret();
     String basicAuth = "Basic " + Base64.getEncoder().encodeToString(credentials.getBytes());
 
-    TokenResponseDTO tokenResponseDTO =
-        ratingApiClient
-            .post()
-            .uri("/authenticate")
-            .header("Authorization", basicAuth)
-            .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-            .bodyValue("grant_type=client_credentials")
-            .retrieve()
-            .bodyToMono(TokenResponseDTO.class)
-            .block();
+    log.debug(
+        "Requesting access token with credentials: {}",
+        credentials); // ⚠ No usar en prod si son secretas
+
+    TokenResponseDTO tokenResponseDTO;
+
+    try {
+
+      log.debug("POST /authenticate - Headers: {} ", basicAuth);
+
+      tokenResponseDTO =
+          ratingApiClient
+              .post()
+              .uri("/authenticate")
+              .header("Authorization", basicAuth)
+              .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+              .bodyValue("grant_type=client_credentials")
+              .retrieve()
+              .bodyToMono(TokenResponseDTO.class)
+              .block();
+    } catch (WebClientResponseException e) {
+      log.error(
+          "Error getting access token: {} - {}", e.getStatusCode(), e.getResponseBodyAsString());
+      throw e;
+    }
+    log.debug("Received access token: {}", tokenResponseDTO.accessToken());
 
     return tokenResponseDTO.accessToken();
   }
@@ -45,10 +59,11 @@ public class RatingClientImpl implements RatingClient {
 
     String accessToken = getAccessToken();
 
+    log.debug("Calling /ratings with userId={}, filmId={}, score={}", userId, filmId, score);
     ratingApiClient
         .post()
         .uri("/ratings")
-        .header("Authorization", "Bearer" + accessToken)
+        .headers(headers -> headers.setBearerAuth(accessToken))
         .bodyValue(new CreateRatingRequestDTO(userId, filmId, score))
         .retrieve()
         .bodyToMono(Void.class)
@@ -60,6 +75,8 @@ public class RatingClientImpl implements RatingClient {
     String accessToken = getAccessToken();
 
     try {
+      log.debug("Calling /ratings/films/{}/users/{} with token {}", filmId, userId, accessToken);
+
       RatingResponseDTO ratingresponseDTO =
           ratingApiClient
               .get()
@@ -80,19 +97,17 @@ public class RatingClientImpl implements RatingClient {
 
     String accessToken = getAccessToken();
 
+    log.debug("Calling /ratings-average/films/{} with token {}", filmId, accessToken);
+    AverageRatingResponseDTO averageRatingResponseDTO =
+        ratingApiClient
+            .get()
+            .uri("/ratings-average/films/{filmId}", filmId)
+            .headers(headers -> headers.setBearerAuth(accessToken))
+            .retrieve()
+            .bodyToMono(AverageRatingResponseDTO.class)
+            .block();
 
-      AverageRatingResponseDTO averageRatingResponseDTO =
-          ratingApiClient
-              .get()
-              .uri("/ratings-average/films/{filmId}", filmId)
-              .headers(headers -> headers.setBearerAuth(accessToken))
-              .retrieve()
-              .bodyToMono(AverageRatingResponseDTO.class)
-              .block();
-
-      return averageRatingResponseDTO;
-
-
+    return averageRatingResponseDTO;
   }
 
   public record TokenResponseDTO(String accessToken, String tokenType, Integer expiresIn) {}
