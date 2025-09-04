@@ -8,6 +8,7 @@ import com.videoclub.filmoapp.rating.dto.RatingRequestDTO;
 import com.videoclub.filmoapp.rating.dto.RatingResponseDTO;
 import com.videoclub.filmoapp.rating.service.JwtService;
 import com.videoclub.filmoapp.rating.service.RatingService;
+import jakarta.annotation.PostConstruct;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,12 @@ public class RatingController {
 
   private final RatingService ratingService;
   private final JwtService jwtService;
+
+  @PostConstruct
+  public void init() {
+    log.info("RatingController initialized - endpoints should be available");
+  }
+
 
   @PostMapping
   public ResponseEntity<?> createRating(
@@ -63,9 +70,12 @@ public class RatingController {
     }
   }
 
-  @GetMapping("-average/films/{filmId}")
+  @GetMapping("-average/films/{filmId}")   // ✅ Sin slash inicial
   public ResponseEntity<?> getAverageRating(
       @RequestHeader("Authorization") String authHeader, @PathVariable Long filmId) {
+
+    log.debug("getAverageRating() called - filmId: {}", filmId); // ✅ Agregar este log
+
 
     try {
       validateTokenOrThrow(authHeader);

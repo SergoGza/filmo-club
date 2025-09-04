@@ -101,7 +101,7 @@ public class RatingClientImpl implements RatingClient {
     AverageRatingResponseDTO averageRatingResponseDTO =
         ratingApiClient
             .get()
-            .uri("/ratings-average/films/{filmId}", filmId)
+            .uri("/ratings/average/{filmId}", filmId)
             .headers(headers -> headers.setBearerAuth(accessToken))
             .retrieve()
             .bodyToMono(AverageRatingResponseDTO.class)

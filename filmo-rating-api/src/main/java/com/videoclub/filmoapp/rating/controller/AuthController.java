@@ -27,7 +27,7 @@ public class AuthController {
 
 
     try {
-      AuthenticationResponseDTO response = authService.authenticate(authorization, grantType);
+      AuthenticationResponseDTO response = authService.authenticate(grantType, authorization);
       return ResponseEntity.ok(response);
     } catch (InvalidGrantTypeException invalidGrantTypeException) {
       return ResponseEntity.badRequest().body(invalidGrantTypeException.getMessage());
