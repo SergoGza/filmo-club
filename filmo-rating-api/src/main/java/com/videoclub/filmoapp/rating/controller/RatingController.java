@@ -55,8 +55,8 @@ public class RatingController {
   @GetMapping("/films/{filmId}/users/{userId}")
   public ResponseEntity<?> getRating(
       @RequestHeader("Authorization") String authHeader,
-      @PathVariable Long filmId,
-      @PathVariable Long userId) {
+      @PathVariable ("filmId") Long filmId,
+      @PathVariable ("userId") Long userId) {
 
     try {
       validateTokenOrThrow(authHeader);
@@ -64,17 +64,17 @@ public class RatingController {
       return ResponseEntity.ok(ratingResponseDTO);
 
     } catch (RatingNotFoundException e) {
-      return ResponseEntity.badRequest().body(e.getMessage());
+      return ResponseEntity.notFound().build();
     } catch (Exception e) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
   }
 
-  @GetMapping("-average/films/{filmId}")   // ✅ Sin slash inicial
+  @GetMapping("/average/{filmId}")   // ✅ Correcto
   public ResponseEntity<?> getAverageRating(
-      @RequestHeader("Authorization") String authHeader, @PathVariable Long filmId) {
+      @RequestHeader("Authorization") String authHeader, @PathVariable ("filmId") Long filmId) {
 
-    log.debug("getAverageRating() called - filmId: {}", filmId); // ✅ Agregar este log
+    log.debug("getAverageRating() called - filmId: {}", filmId);
 
 
     try {

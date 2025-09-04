@@ -13,6 +13,8 @@ public interface FilmService {
 
     FilmDTO getFilm(Long filmId);
 
+    FilmMvcDTO getFilmForEdit (Long filmId);
+
     Page<FilmDTO> getFilms(String title, Pageable pageable);
 
     FilmDTO createFilm(FilmMvcDTO filmMvcDTO);

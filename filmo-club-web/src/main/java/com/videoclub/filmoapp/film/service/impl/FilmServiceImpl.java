@@ -9,7 +9,8 @@ import com.videoclub.filmoapp.film.repository.FilmDAO;
 import com.videoclub.filmoapp.film.service.FilmService;
 import com.videoclub.filmoapp.rating.client.RatingClient;
 import com.videoclub.filmoapp.rating.client.impl.RatingClientImpl;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
@@ -30,14 +31,39 @@ public class FilmServiceImpl implements FilmService {
   private final RatingClient ratingClient;
 
   @Override
+  @Transactional(readOnly = true)
   public FilmDTO getFilm(Long filmId) {
-
-    return filmDAO
-        .findById(filmId)
-        .map(film -> modelMapper.map(film, FilmDTO.class))
-        .orElseThrow(
-            () -> new IllegalArgumentException("Film with id:%s not found".formatted(filmId)));
+    return filmDAO.findById(filmId)
+            .map(film -> FilmDTO.builder()
+                    .id(film.getId())
+                    .title(film.getTitle())
+                    .releaseYear(film.getReleaseYear())
+                    .directorName(film.getDirector() != null
+                            ? film.getDirector().getName() + " " + film.getDirector().getSurname()
+                            : null)
+                    .actorNames(film.getActors().stream()
+                            .map(actor -> actor.getName() + " " + actor.getSurname())
+                            .toList())
+                    .build()
+            )
+            .orElseThrow(() -> new IllegalArgumentException("Film with id:%s not found".formatted(filmId)));
   }
+
+
+  @Override
+  public FilmMvcDTO getFilmForEdit(Long filmId) {
+    Film film = filmDAO.findById(filmId)
+            .orElseThrow(() -> new IllegalArgumentException("Film with id:%s not found".formatted(filmId)));
+
+    return FilmMvcDTO.builder()
+            .id(film.getId())
+            .title(film.getTitle())
+            .releaseYear(film.getReleaseYear())
+            .directorId(film.getDirector() != null ? film.getDirector().getId() : null)
+            .actorIds(film.getActors().stream().map(Artist::getId).toList())
+            .build();
+  }
+
 
   @Override
   public Page<FilmDTO> getFilms(String title, Pageable pageable) {

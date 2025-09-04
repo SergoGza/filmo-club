@@ -14,8 +14,8 @@ public class FilmDTO {
     private Long id;
     private String title;
     private Integer releaseYear;
-    private Long directorId;
-    private List<Long> actorIds;
+    private String directorName;
+    private List<String> actorNames;
     //private String poster;
 
 
