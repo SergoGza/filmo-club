@@ -17,10 +17,12 @@
 
     <div class="row py-2">
         <div class="col-md-8">
+            <!-- ✅ UN SOLO FORM CON ENCTYPE -->
             <form class="row"
                   th:action="@{/videoclub/film/films-edit{filmId}(filmId=${film.id != null ? '/' + film.id : ''})}"
                   th:object="${film}"
-                  method="post">
+                  method="post"
+                  enctype="multipart/form-data">
 
                 <!-- Campo hidden para el ID cuando sea edición -->
                 <input type="hidden" th:field="*{id}" th:if="${film.id != null}">
@@ -33,7 +35,6 @@
                                id="title" name="title" th:field="*{title}"
                                placeholder="Film title"
                                required>
-                        <!-- Mostrar errores de validación si existen -->
                         <div class="invalid-feedback" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
                     </div>
                 </div>
@@ -82,6 +83,22 @@
                     </div>
                 </div>
 
+                <div class="mb-3 row">
+                    <label for="poster" class="col-md-2 col-form-label">Poster</label>
+                    <div class="col-md-5">
+                        <input type="file"
+                               class="form-control"
+                               id="poster"
+                               name="poster"
+                               accept="image/*"
+                               th:required="${film.id == null}">
+                        <div class="form-text">
+                            <span th:if="${film.id == null}">Poster is required for new films</span>
+                            <span th:if="${film.id != null}">Leave empty to keep current poster</span>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Mostrar errores globales si existen -->
                 <div class="mb-3 row" th:if="${#fields.hasGlobalErrors()}">
                     <div class="offset-md-2 col-md-10">
@@ -102,7 +119,6 @@
         </div>
 
         <div class="col-md-4">
-            <!-- Espacio para información adicional o imagen en el futuro -->
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title"

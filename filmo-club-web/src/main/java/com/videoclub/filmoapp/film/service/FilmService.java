@@ -5,6 +5,7 @@ import com.videoclub.filmoapp.film.mvc.dto.FilmMvcDTO;
 import com.videoclub.filmoapp.rating.client.impl.RatingClientImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 import static com.videoclub.filmoapp.rating.client.impl.RatingClientImpl.*;
 
@@ -17,9 +18,8 @@ public interface FilmService {
 
     Page<FilmDTO> getFilms(String title, Pageable pageable);
 
-    FilmDTO createFilm(FilmMvcDTO filmMvcDTO);
-
-    FilmDTO editFilm(FilmMvcDTO filmMvcDTO);
+    FilmDTO createFilm(FilmMvcDTO filmMvcDTO, MultipartFile posterFile);
+    FilmDTO editFilm(FilmMvcDTO filmMvcDTO, MultipartFile posterFile);
 
     Integer getUserRatingForFilm(Long filmId, Long userId);
 

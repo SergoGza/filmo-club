@@ -9,7 +9,6 @@ import com.videoclub.filmoapp.film.mvc.dto.FilmMvcDTO;
 import com.videoclub.filmoapp.film.service.ArtistService;
 import com.videoclub.filmoapp.film.service.FilmService;
 import com.videoclub.filmoapp.rating.client.impl.RatingClientImpl;
-import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Optional;
@@ -19,11 +18,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
@@ -88,7 +87,7 @@ public class FilmMvcController {
   public ModelAndView getFilms(
       @RequestParam(name = "title", required = false) String title,
       @RequestParam(name = "page", required = false, defaultValue = "0") int page,
-      @RequestParam(name = "size", required = false, defaultValue = "4") int size) {
+      @RequestParam(name = "size", required = false, defaultValue = "3") int size) {
     Pageable pageable = PageRequest.of(page, size);
 
     Page<FilmDTO> films = filmService.getFilms(title, pageable);
@@ -106,21 +105,18 @@ public class FilmMvcController {
     "/videoclub/film/films-edit/{filmId}"
   })
   public ModelAndView createOrEditFilm(
-          @PathVariable(name = "filmId", required = false) Long filmId, Model model) {
+      @PathVariable(name = "filmId", required = false) Long filmId, Model model) {
 
-    FilmMvcDTO filmMvcDTO = Optional.ofNullable(filmId)
-            .map(filmService::getFilmForEdit)
-            .orElseGet(FilmMvcDTO::new);
+    FilmMvcDTO filmMvcDTO =
+        Optional.ofNullable(filmId).map(filmService::getFilmForEdit).orElseGet(FilmMvcDTO::new);
 
-    ModelAndView modelAndView =
-            populateCreateOrEditFilmModel(filmMvcDTO, model);
+    ModelAndView modelAndView = populateCreateOrEditFilmModel(filmMvcDTO, model);
     modelAndView.setViewName("videoclub/film/films-edit");
 
     return modelAndView;
   }
 
-  private ModelAndView populateCreateOrEditFilmModel(
-          FilmMvcDTO filmMvcDTO, Model model) {
+  private ModelAndView populateCreateOrEditFilmModel(FilmMvcDTO filmMvcDTO, Model model) {
 
     List<ArtistDTO> directors = artistService.getArtistsByType(String.valueOf(ArtistType.DIRECTOR));
     List<ArtistDTO> actors = artistService.getArtistsByType(String.valueOf(ArtistType.ACTOR));
@@ -142,50 +138,42 @@ public class FilmMvcController {
     return modelAndView;
   }
 
-
   @PostMapping({
-    "/videoclub/film/films-edit",
-    "/videoclub/film/films-edit/",
-    "/videoclub/film/films-edit/{filmId}"
+          "/videoclub/film/films-edit",
+          "/videoclub/film/films-edit/",
+          "/videoclub/film/films-edit/{filmId}"
   })
   public Object createOrEditFilmPost(
-      @Valid @ModelAttribute("film") FilmMvcDTO filmMvcDTO,
-      RedirectAttributes redirectAttributes,
-      BindingResult bindingResult,
-      @PathVariable(name = "filmId", required = false) Long filmId,
-      Model model) {
+          @Valid @ModelAttribute("film") FilmMvcDTO filmMvcDTO,
+          RedirectAttributes redirectAttributes,
+          BindingResult bindingResult,
+          @RequestParam(value = "poster", required = false) MultipartFile posterFile,
+          @PathVariable(name = "filmId", required = false) Long filmId,
+          Model model) {
+
+    if (filmId == null && (posterFile == null || posterFile.isEmpty())) {
+      bindingResult.reject("poster.required", "Poster is required for new films");
+    }
 
     if (bindingResult.hasErrors()) {
-      ModelAndView modelAndView =
-              populateCreateOrEditFilmModel(filmMvcDTO, model);
-
+      ModelAndView modelAndView = populateCreateOrEditFilmModel(filmMvcDTO, model);
       modelAndView.getModel().forEach(redirectAttributes::addFlashAttribute);
-      return new RedirectView("videoclub/film/films-edit" + (filmId != null ? "/" + filmId : ""));
+      return new RedirectView("/videoclub/film/films-edit" + (filmId != null ? "/" + filmId : ""));
     }
 
     try {
       Optional.ofNullable(filmMvcDTO.getId())
-          .map(maybeFilm -> filmService.editFilm(filmMvcDTO))
-          .orElseGet(() -> filmService.createFilm(filmMvcDTO));
+          .map(maybeFilm -> filmService.editFilm(filmMvcDTO, posterFile))
+          .orElseGet(() -> filmService.createFilm(filmMvcDTO, posterFile));
       return "redirect:/videoclub/film/films";
     } catch (Exception e) {
       log.error("Error al procesar la película", e);
 
       bindingResult.reject("error.global", "Error al procesar la película");
 
-      FilmDTO filmDTO = null;
-      if (filmMvcDTO.getId() != null) {
-        try {
-          filmDTO = filmService.getFilm(filmMvcDTO.getId());
-        } catch (Exception ex) {
-          log.error("Error al obtener la película con id: {}", filmMvcDTO.getId(), ex);
-        }
-      }
-
       ModelAndView modelAndView = populateCreateOrEditFilmModel(filmMvcDTO, model);
       modelAndView.setViewName("videoclub/film/films-edit");
       return modelAndView;
-
     }
   }
 }

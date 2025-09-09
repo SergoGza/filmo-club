@@ -1,5 +1,6 @@
 package com.videoclub.filmoapp.film.dto;
 
+import com.videoclub.filmoapp.core.dto.ResourceDTO;
 import lombok.*;
 
 import java.util.List;
@@ -16,7 +17,8 @@ public class FilmDTO {
     private Integer releaseYear;
     private String directorName;
     private List<String> actorNames;
-    //private String poster;
+    private ResourceDTO image;
+
 
 
 }

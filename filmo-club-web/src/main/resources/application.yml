@@ -15,6 +15,7 @@ spring:
   servlet:
     multipart:
       max-file-size: 10MB
+      max-request-size: 10MB
 
 logging:
   level:
@@ -29,3 +30,8 @@ rating-api:
   oauth:
     client-id: filmo-web-client
     client-secret: RxmgLW5HLjX9vpXHZwwgUlEEf12MnWrs
+
+application:
+  film:
+    resources:
+      base-path: C:\Users\sergi\IntelliJProjects\filmo-app-resources

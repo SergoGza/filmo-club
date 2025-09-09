@@ -1,6 +1,5 @@
 package com.videoclub.filmoapp.film.domain;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
@@ -14,7 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "film_image")
+@Table(name = "film_images")
 public class FilmImage {
 
     @Id
@@ -23,7 +22,7 @@ public class FilmImage {
 
     @Column(name = "resource_id")
     @JdbcTypeCode(SqlTypes.VARCHAR)
-    private UUID resourceId;
+    private UUID resourceID;
 
     private String filename;
     private String contentType;
@@ -32,5 +31,4 @@ public class FilmImage {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "film_id")
     private Film film;
-
 }

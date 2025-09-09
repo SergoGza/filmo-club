@@ -41,4 +41,7 @@ public class Film {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToOne(mappedBy = "film", cascade = CascadeType.ALL, orphanRemoval = true)
+    private FilmImage image;
+
 }

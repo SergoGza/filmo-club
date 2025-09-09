@@ -47,52 +47,38 @@
     </div>
 
     <!-- Resultados -->
-    <div class="row py-2">
-        <div class="col-12">
+    <div class="col-md-6 col-lg-4 mb-3" th:each="film : ${films.content}">
+        <div class="card h-100">
 
-            <!-- Si hay películas -->
-            <div th:if="${films.hasContent()}" class="row">
-                <div class="col-md-6 col-lg-4 mb-3" th:each="film : ${films.content}">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title" th:text="${film.title}">Film Title</h5>
-                            <p class="card-text">
-                                <strong>Year:</strong> <span th:text="${film.releaseYear}">2024</span>
-                            </p>
-                            <!-- Botones de acción -->
-                            <div class="mt-auto">
-                                <a th:href="@{/videoclub/film/films/{id}(id=${film.id})}"
-                                   class="btn btn-primary btn-sm me-2">View Details</a>
-                                <a th:href="@{/videoclub/film/films-edit/{id}(id=${film.id})}"
-                                   class="btn btn-outline-primary btn-sm"
-                                   sec:authorize="hasRole('ADMIN')">Edit</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div th:if="${film.image != null}" class="card-img-top-wrapper" style="height: 300px; overflow: hidden;">
+                <img th:src="@{/videoclub/resources/{resourceId}(resourceId=${film.image.resourceId})}"
+                     th:alt="${film.title + ' poster'}"
+                     class="card-img-top"
+                     style="width: 100%; height: 100%; object-fit: cover;">
             </div>
 
-            <!-- Si no hay películas -->
-            <div th:if="${!films.hasContent()}" class="text-center py-5">
-                <div class="row">
-                    <div class="col-12">
-                        <!-- Mensaje diferente según si es búsqueda o no -->
-                        <div th:if="${title != null && !#strings.isEmpty(title)}">
-                            <h3 class="text-muted">No films found</h3>
-                            <p class="text-muted">No films match your search criteria: "<span th:text="${title}">search term</span>"
-                            </p>
-                            <a th:href="@{/videoclub/film/films}" class="btn btn-secondary me-2">Show All Films</a>
-                            <a th:href="@{/videoclub/film/search}" class="btn btn-primary">Try Another Search</a>
-                        </div>
-                        <div th:unless="${title != null && !#strings.isEmpty(title)}">
-                            <h3 class="text-muted">No films available</h3>
-                            <p class="text-muted">There are no films in the database yet.</p>
-                            <a th:href="@{/videoclub/film/films-edit}" class="btn btn-primary">Add First Film</a>
-                        </div>
-                    </div>
-                </div>
+            <!-- Placeholder si no hay poster -->
+            <div th:if="${film.image == null}"
+                 class="card-img-top d-flex align-items-center justify-content-center"
+                 style="height: 300px; background-color: #f8f9fa;">
+                <span class="text-muted">No poster</span>
             </div>
 
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title" th:text="${film.title}">Film Title</h5>
+                <p class="card-text">
+                    <strong>Year:</strong> <span th:text="${film.releaseYear}">2024</span>
+                </p>
+
+                <!-- Botones de acción -->
+                <div class="mt-auto">
+                    <a th:href="@{/videoclub/film/films/{id}(id=${film.id})}"
+                       class="btn btn-primary btn-sm me-2">View Details</a>
+                    <a th:href="@{/videoclub/film/films-edit/{id}(id=${film.id})}"
+                       class="btn btn-outline-primary btn-sm"
+                       sec:authorize="hasRole('ADMIN')">Edit</a>
+                </div>
+            </div>
         </div>
     </div>
 

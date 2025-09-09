@@ -100,32 +100,34 @@
         </div>
 
         <div class="col-md-4">
-            <!-- Información adicional -->
+            <!-- 🆕 MOSTRAR POSTER SI EXISTE -->
+            <div class="card mb-4" th:if="${film.image != null}">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Poster</h5>
+                    <img th:src="@{/videoclub/resources/{resourceId}(resourceId=${film.image.resourceId})}"
+                         th:alt="${film.title + ' poster'}"
+                         class="img-fluid rounded"
+                         style="max-height: 400px; object-fit: contain;">
+                    <div class="mt-2">
+                        <small class="text-muted" th:text="${film.image.filename}">poster.jpg</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Placeholder si no hay poster -->
+            <div class="card mb-4" th:if="${film.image == null}">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Poster</h5>
+                    <div class="d-flex align-items-center justify-content-center"
+                         style="height: 300px; background-color: #f8f9fa;">
+                        <span class="text-muted">No poster available</span>
+                    </div>
+                </div>
+            </div>
+
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Film Statistics</h5>
-
-                    <div class="mb-3">
-                        <strong>Average Rating:</strong><br>
-                        <span th:if="${averageRating != null and averageRating > 0}"
-                              class="h4 text-primary" th:text="${averageRating}">4.50</span>
-                        <span th:if="${averageRating == null or averageRating == 0}"
-                              class="h4 text-muted">--</span>
-                    </div>
-
-                    <div class="mb-3">
-                        <strong>Total Ratings:</strong><br>
-                        <span class="h5" th:text="${totalRatings != null ? totalRatings : 0}">0</span>
-                    </div>
-
-                    <div th:if="${userRating != null}">
-                        <strong>Your Rating:</strong><br>
-                        <span class="h5 text-success" th:text="${userRating}">4</span><span class="text-muted">/5</span>
-                    </div>
-
-                    <div th:if="${userRating == null}">
-                        <p class="text-muted"><small>Rate this film to contribute to its average rating.</small></p>
-                    </div>
                 </div>
             </div>
         </div>
