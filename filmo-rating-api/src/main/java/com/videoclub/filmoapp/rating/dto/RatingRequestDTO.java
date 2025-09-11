@@ -12,13 +12,12 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 public class RatingRequestDTO {
 
-  @NotNull
-  Long userId;
+  @NotNull Long userId;
 
-  @NotNull
-  Long filmId;
+  @NotNull Long filmId;
 
   @Min(1)
   @Max(5)
+  @NotNull
   Integer score;
 }

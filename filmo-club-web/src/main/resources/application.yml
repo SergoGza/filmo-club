@@ -1,6 +1,11 @@
 spring:
   application:
     name: videoclub
+  web:
+    resources:
+      add-mappings: false
+
+
 
 
   datasource:
@@ -21,8 +26,18 @@ logging:
   level:
     org.springframework.web.reactive.function.client: debug
     com.videoclub.filmoapp: debug
+
 server:
   port: 8080
+
+  error:
+    whitelabel:
+      enabled: true
+    include-stacktrace: on_param
+    include-message: always
+    include-binding-errors: always
+    include-exception: false
+
 
 rating-api:
   urlbase: http://localhost:8081

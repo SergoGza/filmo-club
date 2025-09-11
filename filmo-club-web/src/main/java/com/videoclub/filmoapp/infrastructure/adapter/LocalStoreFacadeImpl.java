@@ -1,6 +1,8 @@
 package com.videoclub.filmoapp.infrastructure.adapter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.videoclub.filmoapp.core.port.StoreFacade;
 import com.videoclub.filmoapp.core.config.FilmResourceConfigurationProperties;
 import com.videoclub.filmoapp.core.dto.ResourceContentDTO;
@@ -27,7 +29,6 @@ public class LocalStoreFacadeImpl implements StoreFacade {
     @Override
     public Optional<ResourceIdDTO> saveResource(MultipartFile multipartFile, @Nullable String description) {
         log.info("GUARDANDO RECURSO: {} en {}", multipartFile.getOriginalFilename(), filmResourceConfigurationProperties.basePath());
-
 
         ResourceDescription resourceDescription =
                 ResourceDescription.builder()
@@ -115,13 +116,17 @@ public class LocalStoreFacadeImpl implements StoreFacade {
         }
     }
 
-    // Clase interna para metadatos (igual que en StoreServiceImpl)
     @lombok.Builder
     @lombok.Value
+    @JsonDeserialize(builder = ResourceDescription.ResourceDescriptionBuilder.class)
     private static class ResourceDescription {
         String contentType;
         String filename;
         String description;
         int size;
+
+        @JsonPOJOBuilder(withPrefix = "")
+        public static class ResourceDescriptionBuilder {
+        }
     }
 }

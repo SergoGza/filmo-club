@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+
+<head th:replace="~{videoclub/fragments/head :: header(title = 'Acceso denegado - FilmoClub')}"></head>
+
+<body>
+
+<nav th:replace="~{videoclub/fragments/nav :: nav}"></nav>
+
+<div class="container">
+    <div class="row justify-content-center py-5">
+        <div class="col-md-8 col-lg-6">
+
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-shield-x me-2 fs-4"></i>
+                        <h4 class="mb-0">Acceso denegado</h4>
+                    </div>
+                </div>
+
+                <div class="card-body text-center py-5">
+                    <div class="mb-4">
+                        <i class="bi bi-shield-slash text-muted" style="font-size: 4rem;"></i>
+                    </div>
+
+                    <h1 class="display-1 text-danger fw-bold">403</h1>
+
+                    <p class="lead mb-4">
+                        No tienes permisos para acceder a esta sección.
+                    </p>
+
+                    <div class="alert alert-warning text-start mb-4">
+                        <i class="bi bi-exclamation-triangle me-2"></i>
+                        <small>
+                            Esta área está restringida a administradores o usuarios con permisos especiales.
+                        </small>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-block">
+                        <a th:href="@{/videoclub}" class="btn btn-primary btn-lg">
+                            <i class="bi bi-house me-1"></i>
+                            Volver al inicio
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:insert="~{videoclub/fragments/scripts}"></div>
+
+</body>
+</html>
