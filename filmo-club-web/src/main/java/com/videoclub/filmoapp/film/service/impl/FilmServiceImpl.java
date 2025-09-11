@@ -141,6 +141,8 @@ public class FilmServiceImpl implements FilmService {
       film.setUser(user);
     }
 
+
+
     film.setTitle(filmMvcDTO.getTitle());
     film.setReleaseYear(filmMvcDTO.getReleaseYear());
     film.setDirector(director);

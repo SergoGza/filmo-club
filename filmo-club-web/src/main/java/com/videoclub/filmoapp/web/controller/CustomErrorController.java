@@ -4,7 +4,6 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.error.ErrorController;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +15,7 @@ public class CustomErrorController implements ErrorController {
     @RequestMapping("/error")
     public String handleError(HttpServletRequest request, Model model) {
 
-        // Obtener información del error
+        // Get error information
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
         Object errorMessage = request.getAttribute(RequestDispatcher.ERROR_MESSAGE);
         Object exception = request.getAttribute(RequestDispatcher.ERROR_EXCEPTION);
@@ -27,66 +26,56 @@ public class CustomErrorController implements ErrorController {
             statusCode = Integer.valueOf(status.toString());
         }
 
-        // Log del error para debugging
-        log.error("Error {} en {}: {}", statusCode, requestUri, errorMessage);
+        // Log error for debugging
+        log.error("Error {} at {}: {}", statusCode, requestUri, errorMessage);
         if (exception != null) {
             log.error("Exception: ", (Throwable) exception);
         }
 
-        // Añadir información al modelo
+        // Add information to model
         model.addAttribute("statusCode", statusCode);
         model.addAttribute("errorMessage", errorMessage);
         model.addAttribute("requestUri", requestUri);
         model.addAttribute("timestamp", java.time.LocalDateTime.now());
 
-        // Determinar qué página mostrar
+        // Determine which page to show
         if (statusCode != null) {
             switch (statusCode) {
                 case 401:
-                    model.addAttribute("errorTitle", "No autorizado");
-                    model.addAttribute("errorDescription", "Necesitas iniciar sesión para acceder a esta página.");
-                    model.addAttribute("actionText", "Ir al Login");
+                    model.addAttribute("errorTitle", "Unauthorized");
+                    model.addAttribute("errorDescription", "You need to log in to access this page.");
+                    model.addAttribute("actionText", "Go to Login");
                     model.addAttribute("actionUrl", "/login");
                     return "error/401";
 
                 case 403:
-                    model.addAttribute("errorTitle", "Acceso denegado");
-                    model.addAttribute("errorDescription", "No tienes permisos para acceder a este recurso.");
-                    model.addAttribute("actionText", "Volver al inicio");
+                    model.addAttribute("errorTitle", "Access Denied");
+                    model.addAttribute("errorDescription", "You don't have permission to access this resource.");
+                    model.addAttribute("actionText", "Back to Home");
                     model.addAttribute("actionUrl", "/videoclub");
                     return "error/403";
 
                 case 404:
-                    model.addAttribute("errorTitle", "Página no encontrada");
-                    model.addAttribute("errorDescription", "La página que buscas no existe o ha sido movida.");
-                    model.addAttribute("actionText", "Volver al inicio");
+                    model.addAttribute("errorTitle", "Page Not Found");
+                    model.addAttribute("errorDescription", "The page you're looking for doesn't exist or has been moved.");
+                    model.addAttribute("actionText", "Back to Home");
                     model.addAttribute("actionUrl", "/videoclub");
                     return "error/404";
 
                 case 500:
-                    model.addAttribute("errorTitle", "Error interno del servidor");
-                    model.addAttribute("errorDescription", "Ha ocurrido un error inesperado. Inténtalo de nuevo más tarde.");
-                    model.addAttribute("actionText", "Volver al inicio");
+                    model.addAttribute("errorTitle", "Internal Server Error");
+                    model.addAttribute("errorDescription", "An unexpected error occurred. Please try again later.");
+                    model.addAttribute("actionText", "Back to Home");
                     model.addAttribute("actionUrl", "/videoclub");
                     return "error/500";
 
-                default:
-                    if (statusCode >= 400 && statusCode < 500) {
-                        model.addAttribute("errorTitle", "Error de solicitud");
-                        model.addAttribute("errorDescription", "Ha ocurrido un error con tu solicitud.");
-                        return "error/4xx";
-                    } else if (statusCode >= 500) {
-                        model.addAttribute("errorTitle", "Error del servidor");
-                        model.addAttribute("errorDescription", "Ha ocurrido un error interno del servidor.");
-                        return "error/5xx";
-                    }
             }
         }
 
-        // Error genérico
+        // Generic error
         model.addAttribute("errorTitle", "Error");
-        model.addAttribute("errorDescription", "Ha ocurrido un error inesperado.");
-        model.addAttribute("actionText", "Volver al inicio");
+        model.addAttribute("errorDescription", "An unexpected error occurred.");
+        model.addAttribute("actionText", "Back to Home");
         model.addAttribute("actionUrl", "/videoclub");
         return "error/error";
     }

@@ -24,9 +24,10 @@ public class SecurityConfig {
                 authz
                     .requestMatchers("/login", "/register", "/videoclub")
                     .permitAll()
-                    .requestMatchers(
-                        "/videoclub/film/films-edit/")
+                    .requestMatchers("/videoclub/film/films-edit/*")
                     .hasRole("ADMIN")
+                    .requestMatchers("/videoclub/film/films-edit")
+                    .authenticated()
                     .requestMatchers("/videoclub/**")
                     .authenticated())
         .formLogin(

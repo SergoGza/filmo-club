@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 
-<head th:replace="~{videoclub/fragments/head :: header(title = 'Acceso no autorizado - FilmoClub')}"></head>
+<head th:replace="~{videoclub/fragments/head :: header(title = 'Unauthorized - FilmoClub')}"></head>
 
 <body>
 
@@ -15,7 +15,7 @@
                 <div class="card-header bg-danger text-white">
                     <div class="d-flex align-items-center">
                         <i class="bi bi-shield-exclamation me-2 fs-4"></i>
-                        <h4 class="mb-0">Acceso no autorizado</h4>
+                        <h4 class="mb-0">Unauthorized Access</h4>
                     </div>
                 </div>
 
@@ -27,43 +27,43 @@
                     <h1 class="display-1 text-danger fw-bold">401</h1>
 
                     <p class="lead mb-4">
-                        Necesitas iniciar sesión para acceder a esta parte de FilmoClub.
+                        You need to sign in to access this section of FilmoClub.
                     </p>
 
                     <div class="alert alert-info text-start mb-4">
                         <i class="bi bi-info-circle me-2"></i>
                         <small>
-                            Para acceder a funciones como añadir películas, crear puntuaciones
-                            o gestionar tu perfil, es necesario que tengas una cuenta y estés conectado.
+                            To access features like adding films, creating ratings,
+                            or managing your profile, you need to have an account and be logged in.
                         </small>
                     </div>
 
                     <div class="d-grid gap-2 d-md-block">
                         <a th:href="@{/login}" class="btn btn-primary btn-lg me-2">
                             <i class="bi bi-box-arrow-in-right me-1"></i>
-                            Iniciar sesión
+                            Sign In
                         </a>
                         <a th:href="@{/register}" class="btn btn-outline-primary btn-lg">
                             <i class="bi bi-person-plus me-1"></i>
-                            Crear cuenta
+                            Create Account
                         </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Información adicional -->
+            <!-- Additional Information -->
             <div class="card mt-4">
                 <div class="card-body">
-                    <h6 class="card-title">¿Qué puedes hacer sin iniciar sesión?</h6>
+                    <h6 class="card-title">What can you do without signing in?</h6>
                     <ul class="list-unstyled mb-0">
                         <li><i class="bi bi-arrow-right text-success me-2"></i>
-                            <a th:href="@{/videoclub/film/films}">Ver el catálogo de películas</a>
+                            <a th:href="@{/videoclub/film/films}">View the film catalog</a>
                         </li>
                         <li><i class="bi bi-arrow-right text-success me-2"></i>
-                            <a th:href="@{/videoclub/film/search}">Buscar películas</a>
+                            <a th:href="@{/videoclub/film/search}">Search films</a>
                         </li>
                         <li><i class="bi bi-arrow-right text-success me-2"></i>
-                            Ver detalles y puntuaciones de películas
+                            View film details and ratings
                         </li>
                     </ul>
                 </div>

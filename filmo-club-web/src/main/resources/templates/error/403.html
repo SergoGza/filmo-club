@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 
-<head th:replace="~{videoclub/fragments/head :: header(title = 'Acceso denegado - FilmoClub')}"></head>
+<head th:replace="~{videoclub/fragments/head :: header(title = 'Access Denied - FilmoClub')}"></head>
 
 <body>
 
@@ -15,7 +15,7 @@
                 <div class="card-header bg-danger text-white">
                     <div class="d-flex align-items-center">
                         <i class="bi bi-shield-x me-2 fs-4"></i>
-                        <h4 class="mb-0">Acceso denegado</h4>
+                        <h4 class="mb-0">Access Denied</h4>
                     </div>
                 </div>
 
@@ -27,20 +27,20 @@
                     <h1 class="display-1 text-danger fw-bold">403</h1>
 
                     <p class="lead mb-4">
-                        No tienes permisos para acceder a esta sección.
+                        You don't have permission to access this section.
                     </p>
 
                     <div class="alert alert-warning text-start mb-4">
                         <i class="bi bi-exclamation-triangle me-2"></i>
                         <small>
-                            Esta área está restringida a administradores o usuarios con permisos especiales.
+                            This area is restricted to administrators or users with special privileges.
                         </small>
                     </div>
 
                     <div class="d-grid gap-2 d-md-block">
                         <a th:href="@{/videoclub}" class="btn btn-primary btn-lg">
                             <i class="bi bi-house me-1"></i>
-                            Volver al inicio
+                            Back to Home
                         </a>
                     </div>
                 </div>

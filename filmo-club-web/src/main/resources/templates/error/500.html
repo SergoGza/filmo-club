@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 
-<head th:replace="~{videoclub/fragments/head :: header(title = 'Error del servidor - FilmoClub')}"></head>
+<head th:replace="~{videoclub/fragments/head :: header(title = 'Server Error - FilmoClub')}"></head>
 
 <body>
 
@@ -15,7 +15,7 @@
                 <div class="card-header bg-danger text-white">
                     <div class="d-flex align-items-center">
                         <i class="bi bi-exclamation-octagon me-2 fs-4"></i>
-                        <h4 class="mb-0">Error interno del servidor</h4>
+                        <h4 class="mb-0">Internal Server Error</h4>
                     </div>
                 </div>
 
@@ -27,50 +27,50 @@
                     <h1 class="display-1 text-danger fw-bold">500</h1>
 
                     <p class="lead mb-4">
-                        Algo ha salido mal en nuestros servidores. ¡Estamos trabajando para solucionarlo!
+                        Something went wrong on our servers. We're working to fix it!
                     </p>
 
                     <div class="alert alert-warning text-start mb-4">
                         <i class="bi bi-exclamation-triangle me-2"></i>
                         <small>
-                            Este error ha sido registrado automáticamente y nuestro equipo técnico
-                            ha sido notificado. Inténtalo de nuevo en unos minutos.
+                            This error has been automatically logged and our technical team
+                            has been notified. Please try again in a few minutes.
                         </small>
                     </div>
 
                     <div class="d-grid gap-2 d-md-block">
                         <button type="button" class="btn btn-primary btn-lg me-2" onclick="location.reload()">
                             <i class="bi bi-arrow-clockwise me-1"></i>
-                            Intentar de nuevo
+                            Try Again
                         </button>
                         <a th:href="@{/videoclub}" class="btn btn-outline-primary btn-lg">
                             <i class="bi bi-house me-1"></i>
-                            Ir al inicio
+                            Go to Home
                         </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Información adicional para errores 500 -->
+            <!-- Additional information for 500 errors -->
             <div class="card mt-4">
                 <div class="card-body">
-                    <h6 class="card-title">¿Qué puedes hacer mientras tanto?</h6>
+                    <h6 class="card-title">What can you do in the meantime?</h6>
                     <ul class="list-unstyled mb-0">
                         <li><i class="bi bi-arrow-right text-primary me-2"></i>
-                            Esperar unos minutos e intentar de nuevo
+                            Wait a few minutes and try again
                         </li>
                         <li><i class="bi bi-arrow-right text-primary me-2"></i>
-                            <a th:href="@{/videoclub/film/films}">Explorar otras secciones</a> de la aplicación
+                            <a th:href="@{/videoclub/film/films}">Explore other sections</a> of the application
                         </li>
                         <li><i class="bi bi-arrow-right text-primary me-2"></i>
-                            Si el problema persiste, contacta con soporte técnico
+                            If the problem persists, contact technical support
                         </li>
                     </ul>
 
-                    <!-- Información técnica (útil para debugging) -->
+                    <!-- Technical information (useful for debugging) -->
                     <div th:if="${errorMessage}" class="mt-3 p-3 bg-light rounded">
                         <small class="text-muted">
-                            <strong>ID del error:</strong> <span th:text="${#temporals.format(timestamp, 'yyyyMMdd-HHmmss')}"></span><br>
+                            <strong>Error ID:</strong> <span th:text="${#temporals.format(timestamp, 'yyyyMMdd-HHmmss')}"></span><br>
                             <strong>Timestamp:</strong> <span th:text="${#temporals.format(timestamp, 'dd/MM/yyyy HH:mm:ss')}"></span>
                         </small>
                     </div>
