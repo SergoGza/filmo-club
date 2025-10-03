@@ -255,7 +255,19 @@
     "softSkills": [
       {
         "skill": {
+          "name": "Autonomía en el aprendizaje",
+          "type": "practice"
+        }
+      },
+      {
+        "skill": {
           "name": "Capacidad de abstracción",
+          "type": "practice"
+        }
+      },
+      {
+        "skill": {
+          "name": "Pensamiento creativo",
           "type": "practice"
         }
       }
