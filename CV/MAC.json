@@ -269,6 +269,10 @@
           "type": "technology"
         },
         {
+          "name": "Java",
+          "type": "technology"
+        },
+        {
           "name": "Mockito",
           "type": "technology"
         },
