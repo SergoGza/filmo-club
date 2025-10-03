@@ -265,6 +265,10 @@
     "preferences": {
       "preferredCompetences": [
         {
+          "name": "JUnit",
+          "type": "technology"
+        },
+        {
           "name": "Spring Boot",
           "type": "technology"
         }
