@@ -251,6 +251,14 @@
         },
         "finishDate": "2024-04-30"
       }
+    ],
+    "softSkills": [
+      {
+        "skill": {
+          "name": "Capacidad de abstracción",
+          "type": "practice"
+        }
+      }
     ]
   },
   "careerPreferences": {
