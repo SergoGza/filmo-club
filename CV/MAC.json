@@ -265,7 +265,7 @@
     "preferences": {
       "preferredCompetences": [
         {
-          "name": "Spring",
+          "name": "Spring Boot",
           "type": "technology"
         }
       ],
