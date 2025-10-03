@@ -269,6 +269,10 @@
           "type": "technology"
         },
         {
+          "name": "Mockito",
+          "type": "technology"
+        },
+        {
           "name": "PostgreSQL",
           "type": "technology"
         },
