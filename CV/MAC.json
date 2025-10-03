@@ -1,0 +1,302 @@
+{
+  "$schema": "https://raw.githubusercontent.com/getmanfred/mac/v0.5/schema/schema.json",
+  "settings": {
+    "language": "ES",
+    "MACVersion": "0.5"
+  },
+  "aboutMe": {
+    "profile": {
+      "name": "Sergio",
+      "surnames": "González",
+      "title": "Backend Developer | Spring Boot · Microservices · Java",
+      "description": "Desarrollador Full Stack con 5 años de experiencia trabajando directamente con sistemas en producción. Especializado en Spring Boot, Vue.js y Thymeleaf.\n\nDurante mi trayectoria en Accenture (Carrefour) y TEDITEL, he trabajado con:\n- Microservicios Java y Spring Boot en entornos de producción\n- Desarrollo de aplicaciones con Vue.js\n- Optimización de bases de datos SQL Server, PostgreSQL y MongoDB\n- Automatización de procesos con Java y Apache Kafka\n- Resolución de incidencias críticas en sistemas 24/7\n\nActualmente completando especialización en Spring Framework en TokioSchool mientras busco oportunidades como desarrollador remoto.\n\nStack técnico: Java, Spring Boot, Vue.js, Thymeleaf, SQL, MongoDB, Kafka, Docker\nDisponibilidad: Inmediata para proyectos remotos",
+      "location": {
+        "notes": "Autocompleted using Google Maps API (id: ChIJgTwKgJcpQg0RaSKMYcHeNsQ)",
+        "country": "España",
+        "region": "Comunidad de Madrid",
+        "municipality": "Madrid"
+      }
+    },
+    "relevantLinks": [
+      {
+        "type": "linkedin",
+        "URL": "https://www.linkedin.com/in/sergiogza"
+      }
+    ]
+  },
+  "experience": {
+    "jobs": [
+      {
+        "organization": {
+          "name": "Accenture España"
+        },
+        "roles": [
+          {
+            "name": "Desarrollador Backend Java | Administración Pública",
+            "startDate": "2025-10-01",
+            "challenges": [
+              {
+                "description": "- Microservicios con Spring Boot 3.1.4 y Java 17\n- Servicios REST con Spring Feign Client\n- Framework propio para estandarizar procesos\n- Testing unitario e integración con JUnit 5 y Mockito\n- Seguridad: Spring Security + OAuth2/JWT\n- Documentación clara de APIs y servicios\n- Gestión de excepciones y logging en producción\n- Despliegue en Docker y orquestación con Kubernetes"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "organization": {
+          "name": "Accenture España"
+        },
+        "roles": [
+          {
+            "name": "Desarrollador Java | Soporte Técnico L3 en Accenture España",
+            "startDate": "2022-03-01",
+            "finishDate": "2025-10-31",
+            "challenges": [
+              {
+                "description": "Desarrollador Java | Soporte Técnico L3 en sistemas enterprise para Carrefour\n\n- Desarrollo de soluciones Java para automatización de procesos críticos de negocio\n- Implementación de integraciones con Apache Kafka (formatos AVRO/JSON)\n- Mantenimiento y optimización de microservicios Spring Boot en producción\n- Desarrollo de herramientas internas en Java para gestión de tareas automatizadas\n- Creación de scripts complejos PL/SQL y consultas optimizadas MongoDB\n- Debugging avanzado y corrección de bugs en aplicaciones Java enterprise\n- Análisis de rendimiento con ElasticSearch, Kibana y Grafana\n- Gestión de bases de datos PostgreSQL, MongoDB y SQL Server\n\nStack técnico: Java, Spring Boot, Apache Kafka, Microservicios, MongoDB, PostgreSQL, Docker, Control-M\n\nProyecto destacado: Desarrollo de sistema de automatización de tareas en Java que redujo un 40% el tiempo de procesamiento manual de datos."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "organization": {
+          "name": "Accenture España"
+        },
+        "roles": [
+          {
+            "name": "Técnico Soporte y Correctivo 3N",
+            "startDate": "2020-10-01",
+            "finishDate": "2022-03-31",
+            "challenges": [
+              {
+                "description": "En mi rol actual en Accenture España, me dedico a proporcionar soporte técnico avanzado y soluciones correctivas para aplicaciones críticas en entornos de comercio electrónico de alta disponibilidad.\n\nPrincipales responsabilidades.\n\nGestión de Aplicaciones Críticas: Soporte especializado 3N para aplicaciones clave, asegurando su funcionamiento óptimo y la disponibilidad constante.\n\nAnálisis y Resolución de Problemas: Análisis de incidencias complejas en bases de datos PostgreSQL, OracleSQL y MongoDB. Enfoque sistemático y conocimiento técnico de la aplicación que permite identificar rápidamente la raíz de los problemas y aplicar soluciones efectivas, minimizando el tiempo de inactividad.\n\nMejora Continua y Documentación: Desarrollo y mantenimiento de documentación funcional de alta calidad sobre los procesos de soporte, facilitando la comprensión y el manejo eficiente de las tareas por parte del equipo y el traspaso de tareas a equipos de menor nivel. Esto mejora significativamente la eficiencia operativa y la transferencia de conocimientos dentro del equipo.\n\nDesarrollo Correctivo en Java: Identificación y corrección de bugs menores en las aplicaciones, colaborando estrechamente con otros equipos para analizar problemas funcionales y desarrollar soluciones efectivas que mejoren la experiencia del usuario final.\nAutomatización de tareas manuales desarrollando pequeñas soluciones de software que reduzcan el tiempo de ejecución de las tareas."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "organization": {
+          "name": "Fundación Internacional Oficina de Cooperación Universitaria"
+        },
+        "roles": [
+          {
+            "name": "Técnico de sistemas y bases de datos",
+            "startDate": "2017-03-01",
+            "finishDate": "2019-03-31",
+            "challenges": [
+              {
+                "description": "Corrección de errores durante la implementación de una nueva herramienta en la aplicación desarrollada por la empresa en entornos de pruebas y correctivos.\nMonitorización de procesos, revisión de logs, código (PL/SQL) y desarrollo de pequeños scripts para la optimización de procesos en Bases de datos.\nMonitorización de sistemas (Oracle) en constante comunicación con el departamento de Desarrollo, Sistemas y Consultoria."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "knowledge": {
+    "languages": [
+      {
+        "name": "EN",
+        "fullName": "Inglés",
+        "level": "Professional working proficiency"
+      },
+      {
+        "name": "ES",
+        "fullName": "Español",
+        "level": "Native or bilingual proficiency"
+      }
+    ],
+    "hardSkills": [
+      {
+        "skill": {
+          "name": "Android",
+          "type": "technology"
+        }
+      },
+      {
+        "skill": {
+          "name": "Eclipse",
+          "type": "technology"
+        }
+      },
+      {
+        "skill": {
+          "name": "Elasticsearch",
+          "type": "technology"
+        }
+      },
+      {
+        "skill": {
+          "name": "JUnit",
+          "type": "technology"
+        }
+      },
+      {
+        "skill": {
+          "name": "Java",
+          "type": "technology"
+        }
+      },
+      {
+        "skill": {
+          "name": "Jenkins",
+          "type": "technology"
+        }
+      },
+      {
+        "skill": {
+          "name": "Jira",
+          "type": "technology"
+        }
+      },
+      {
+        "skill": {
+          "name": "Kibana",
+          "type": "technology"
+        }
+      },
+      {
+        "skill": {
+          "name": "Laravel",
+          "type": "technology"
+        }
+      },
+      {
+        "skill": {
+          "name": "Maven",
+          "type": "technology"
+        }
+      },
+      {
+        "skill": {
+          "name": "Oracle",
+          "type": "technology"
+        }
+      },
+      {
+        "skill": {
+          "name": "PL/SQL",
+          "type": "technology"
+        }
+      },
+      {
+        "skill": {
+          "name": "PostgreSQL",
+          "type": "technology"
+        }
+      },
+      {
+        "skill": {
+          "name": "SOAP",
+          "type": "technology"
+        }
+      },
+      {
+        "skill": {
+          "name": "SQL",
+          "type": "technology"
+        }
+      },
+      {
+        "skill": {
+          "name": "Spring",
+          "type": "technology"
+        }
+      },
+      {
+        "skill": {
+          "name": "Spring Boot",
+          "type": "technology"
+        }
+      },
+      {
+        "skill": {
+          "name": "Tailwind",
+          "type": "technology"
+        }
+      },
+      {
+        "skill": {
+          "name": "Vue",
+          "type": "technology"
+        }
+      },
+      {
+        "skill": {
+          "name": "Windows",
+          "type": "technology"
+        }
+      }
+    ],
+    "studies": [
+      {
+        "studyType": "officialDegree",
+        "degreeAchieved": true,
+        "name": "Ciclo Formativo de Grado Superior, Programación informática, aplicaciones específicas",
+        "startDate": "2023-01-01",
+        "institution": {
+          "name": "IES Augusto Gonzalez de Linares"
+        },
+        "finishDate": "2025-06-30"
+      },
+      {
+        "studyType": "officialDegree",
+        "degreeAchieved": true,
+        "name": "Programación con Java: Certificación OCP, Programación informática, aplicaciones específicas",
+        "startDate": "2022-09-01",
+        "institution": {
+          "name": "Tokio School"
+        },
+        "finishDate": "2024-04-30"
+      }
+    ]
+  },
+  "careerPreferences": {
+    "contact": {
+      "publicProfiles": [
+        {
+          "URL": "https://www.linkedin.com/in/sergiogza",
+          "type": "linkedin"
+        }
+      ]
+    },
+    "preferences": {
+      "preferredRoles": [
+        "Backend Developer"
+      ]
+    },
+    "status": "searchingActively",
+    "requirements": {
+      "contractTypes": [
+        "permanent",
+        "freelance"
+      ]
+    }
+  },
+  "manfredSpecificData": {
+    "mainStackTechs": [
+      {
+        "name": "JUnit",
+        "type": "technology"
+      },
+      {
+        "name": "Java",
+        "type": "technology"
+      },
+      {
+        "name": "PostgreSQL",
+        "type": "technology"
+      },
+      {
+        "name": "Spring",
+        "type": "technology"
+      },
+      {
+        "name": "Spring Boot",
+        "type": "technology"
+      }
+    ]
+  }
+}
